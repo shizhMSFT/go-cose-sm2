@@ -32,7 +32,7 @@ func main() {
 	signer := cosesm2.NewSigner(privateKey)
 
 	// sign message
-	err = msgToSign.Sign(rand.Reader, signer)
+	err = msgToSign.Sign(rand.Reader, nil, signer)
 	if err != nil {
 		panic(err)
 	}
@@ -52,7 +52,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	err = msgToVerify.Verify(verifier)
+	err = msgToVerify.Verify(nil, verifier)
 	if err != nil {
 		panic(err)
 	}
@@ -60,7 +60,7 @@ func main() {
 
 	// tamper the message and verification should fail
 	msgToVerify.Payload = []byte("foobar")
-	err = msgToVerify.Verify(verifier)
+	err = msgToVerify.Verify(nil, verifier)
 	if err != cose.ErrVerification {
 		panic(err)
 	}
